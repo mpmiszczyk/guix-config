@@ -11,52 +11,68 @@
 ;; used in this configuration.
 (use-modules (gnu)
              (gnu packages shells)
+             (gnu packages lisp)
              (gnu services networking)
              (gnu services sound)
 	           (nongnu packages linux)
 	           (nongnu system linux-initrd))
 
+
+(use-package-modules fonts wm)
+
 (use-service-modules desktop networking ssh xorg)
 
 (operating-system
-  ;; nongnu firmware
-  (kernel linux)
-  (initrd microcode-initrd)
-  (firmware (cons*
-	           iwlwifi-firmware
-	           linux-firmware
-             amdgpu-firmware
-             %base-firmware))
-  
-  (locale "en_US.utf8")
-  (timezone "Europe/Warsaw")
-  (keyboard-layout (keyboard-layout "pl" "colemak"
-				    #:options '("ctrl:nocaps")))
-  (host-name "mpm-p16s1")
+ ;; nongnu firmware
+ (kernel linux)
+ (initrd microcode-initrd)
+ (firmware (cons*
+	          ;; iwlwifi-firmware
+	          linux-firmware
+            amdgpu-firmware
+            %base-firmware))
+ 
+ (locale "en_US.utf8")
+ (timezone "Europe/Warsaw")
+ (keyboard-layout (keyboard-layout "us" "colemak"
+                                   #:options '("ctrl:nocaps")))
+ (host-name "mpm-p16s1")
 
-  ;; The list of user accounts ('root' is implicit).
-  (users (cons* (user-account
-                  (name "mpm")
-                  (comment "mpm")
-                  (group "users")
-                  (home-directory "/home/mpm")
-		              (shell (file-append zsh "/bin/zsh"))
-                  (supplementary-groups '("wheel" "netdev" "audio" "video")))
-                %base-user-accounts))
+ ;; The list of user accounts ('root' is implicit).
+ (users (cons* (user-account
+                (name "mpm")
+                (comment "mpm")
+                (group "users")
+                (home-directory "/home/mpm")
+		            (shell (file-append zsh "/bin/zsh"))
+                (supplementary-groups '("wheel" "netdev" "audio" "video")))
+               %base-user-accounts))
 
-  ;; Packages installed system-wide.  Users can also install packages
-  ;; under their own account: use 'guix search KEYWORD' to search
-  ;; for packages and 'guix install PACKAGE' to install a package.
-  (packages (append (list (specification->package "i3-wm")
-                          (specification->package "i3status")
-                          (specification->package "dmenu")
-                          (specification->package "st")
-                          (specification->package "ratpoison")
-                          (specification->package "xterm")
-                          (specification->package "nss-certs")
-			                    (specification->package "zsh")
-                          (specification->package "mesa"))
-                    %base-packages))
+ ;; Packages installed system-wide.  Users can also install packages
+ ;; under their own account: use 'guix search KEYWORD' to search
+ ;; for packages and 'guix install PACKAGE' to install a package.
+ (packages (append (list
+                    ;; sbcl-stumpwm-ttf-fonts
+                    ;; sbcl-ttf-fonts
+                    ;; font-iosevka-term
+                    (specification->package "sbcl")
+                    ;; (specification->package "sbcl-slynk")
+                    (specification->package "sbcl-stumpwm-cpu")
+                    (specification->package "sbcl-stumpwm-net")
+                    (specification->package "sbcl-stumpwm-pass")
+                    (specification->package "sbcl-stumpwm-ttf-fonts")
+                    (specification->package "sbcl-stumpwm-wifi")
+                    ;; (specification->package "stumpwm-with-slynk")
+                    (specification->package "font-iosevka-term")
+
+                    (specification->package "i3-wm")
+                    (specification->package "i3status")
+                    (specification->package "dmenu")
+                    (specification->package "xterm")
+                    (specification->package "nss-certs")
+			              (specification->package "zsh")
+                    (specification->package "mesa"))
+                   %base-packages))
 
   ;; Below is the list of system services.  To search for available
   ;; services, run 'guix system search KEYWORD' in a terminal.
@@ -82,7 +98,8 @@
                         (append (list "https://substitutes.nonguix.org")
                                 %default-substitute-urls))
                        (authorized-keys
-                        (append (list (local-file "./nonguix-signing-key.pub"))                                          %default-authorized-guix-keys))))))
+                        (append (list (local-file "./nonguix-signing-key.pub"))
+                                %default-authorized-guix-keys))))))
   
   (bootloader (bootloader-configuration
                 (bootloader grub-efi-bootloader)

@@ -68,6 +68,7 @@
                                             "google-chrome-stable"
                                             "xrandr"
                                             "zsh"
+                                            "fzf"
                                             "btop")))
 
   ;; Below is the list of Home services.  To search for available
@@ -79,12 +80,12 @@
                    (zprofile (list (local-file "./.zprofile" "zprofile")))))
          
          ;; (simple-service 'config home-files-service-type
-         ;;          `(("gitconfig" ,(local-file "./files/.gitconfig"))
-         ;;            ("tool-versions" ,(local-file "./files/.tool-versions"))
-         ;;            ))
+         ;;          `((".gitconfig" ,(local-file "files/.gitconfig"))
+         ;;            (".tool-versions" ,(local-file "files/.tool-versions"))))
          (simple-service 'configd home-xdg-configuration-files-service-type
                   `(("btop" ,(local-file "./files/btop" #:recursive? #t))
-                    ("i3" ,(local-file "./files/i3" #:recursive? #t))))
+                    ("i3" ,(local-file "./files/i3" #:recursive? #t))
+                    ("stumpwm" ,(local-file "./files/stumpwm" #:recursive? #t))))
 
          (service home-redshift-service-type
                   (home-redshift-configuration
