@@ -83,14 +83,14 @@
          ;;          `((".gitconfig" ,(local-file "files/.gitconfig"))
          ;;            (".tool-versions" ,(local-file "files/.tool-versions"))))
          (simple-service 'configd home-xdg-configuration-files-service-type
-                  `(("btop" ,(local-file "./files/btop" #:recursive? #t))
-                    ("i3" ,(local-file "./files/i3" #:recursive? #t))
-                    ("stumpwm" ,(local-file "./files/stumpwm" #:recursive? #t))))
+                         `(("btop" ,(local-file "./files/btop" #:recursive? #t))
+                           ("i3" ,(local-file "./files/i3" #:recursive? #t))
+                           ("stumpwm" ,(local-file "./files/stumpwm" #:recursive? #t))))
 
          (service home-redshift-service-type
                   (home-redshift-configuration
                    (location-provider 'manual)
-                   ; Warsaw
+                                        ; Warsaw
                    (latitude 52.23)
                    (longitude 21.01)))
 

@@ -57,6 +57,7 @@
                     ;; font-iosevka-term
                     (specification->package "sbcl")
                     ;; (specification->package "sbcl-slynk")
+                    (specification->package "stumpwm")
                     (specification->package "sbcl-stumpwm-cpu")
                     (specification->package "sbcl-stumpwm-net")
                     (specification->package "sbcl-stumpwm-pass")

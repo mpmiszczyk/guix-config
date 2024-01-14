@@ -1,5 +1,5 @@
 # Honor system-wide environment variables
-GUIX_PROFILE="/home/mpm/.guix-profile"
+export GUIX_PROFILE="/home/mpm/.guix-profile"
 source "$GUIX_PROFILE/etc/profile"
 
 # Merge search-paths from multiple profiles, the order matters.
