@@ -14,11 +14,13 @@
              (gnu packages lisp)
              (gnu services networking)
              (gnu services sound)
+             (gnu services docker)
+             (gnu services databases)
 	           (nongnu packages linux)
 	           (nongnu system linux-initrd))
 
 
-(use-package-modules fonts wm)
+(use-package-modules fonts wm databases)
 
 (use-service-modules desktop networking ssh xorg)
 
@@ -45,7 +47,7 @@
                 (group "users")
                 (home-directory "/home/mpm")
 		            (shell (file-append zsh "/bin/zsh"))
-                (supplementary-groups '("wheel" "netdev" "audio" "video")))
+                (supplementary-groups '("wheel" "netdev" "audio" "video" "docker")))
                %base-user-accounts))
 
  ;; Packages installed system-wide.  Users can also install packages
@@ -65,18 +67,18 @@
                     (specification->package "sbcl-stumpwm-wifi")
                     ;; (specification->package "stumpwm-with-slynk")
                     (specification->package "font-iosevka-term")
-
                     (specification->package "i3-wm")
                     (specification->package "i3status")
                     (specification->package "dmenu")
                     (specification->package "xterm")
                     (specification->package "nss-certs")
 			              (specification->package "zsh")
-                    (specification->package "mesa"))
+                    (specification->package "mesa")
+                    (specification->package "gnome-keyring"))
                    %base-packages))
 
-  ;; Below is the list of system services.  To search for available
-  ;; services, run 'guix system search KEYWORD' in a terminal.
+ ;; Below is the list of system services.  To search for available
+ ;; services, run 'guix system search KEYWORD' in a terminal.
  (services
   (modify-services
    (append (list
@@ -86,7 +88,15 @@
             (set-xorg-configuration (xorg-configuration
                                      (keyboard-layout keyboard-layout)))
             (service gnome-keyring-service-type)
-            )
+            (service docker-service-type)
+            (service postgresql-service-type
+                     (postgresql-configuration
+                      (postgresql postgresql-14)))
+            (service postgresql-role-service-type
+                     (postgresql-role-configuration
+                      (roles
+                       (list (postgresql-role (name "mpm") (permissions '(login createdb replication superuser)))
+                             (postgresql-role (name "postgres") (permissions '(login createdb replication superuser))))))))
 
            ;; This is the default list of services we
            ;; are appending to.

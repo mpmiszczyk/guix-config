@@ -4,15 +4,17 @@
 ;; need to capture the channels being used, as returned by "guix describe".
 ;; See the "Replicating Guix" section in the manual.
 
-(use-modules (gnu home)
+(use-modules (gnu)
              (gnu packages)
              (gnu services)
              (gnu services shepherd)
              (guix gexp)
+             (gnu home)
              (gnu home services)
              (gnu home services shells)
              (gnu home services desktop)
              (gnu home services shepherd))
+
 
 (home-environment
   ;; Below is the list of packages that will show up in your
@@ -38,8 +40,6 @@
                                             "libsecret"
                                             "libappindicator"
                                             "libxscrnsaver"
-                                            "rust-keyring"
-                                            "rust-secret-service"
                                             "python"
                                             "ranger"
                                             "awscli"
@@ -103,3 +103,4 @@
                                     (stop #~(make-kill-destructor))
                                     ;; (stop #~(make-system-destructor '("emacsclient" "--eveal" "(progn (setq kill-emacs-hook nil) (kill-emacs))")))
                                     ))))))))
+
