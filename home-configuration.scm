@@ -14,6 +14,7 @@
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
   (packages (specifications->packages (list "pamixer"
+                                            "pulseaudio"
                                             "mpv"
                                             "yt-dlp"
                                             "hunspell-dict-en-gb"
@@ -22,11 +23,9 @@
                                             "hunspell-dict-pl"
                                             "fwupd-nonfree"
                                             "tree-sitter"
-                                            "ocaml-spawn"
                                             "openssl@1"
                                             "openssh"
                                             "node"
-                                            "pulseaudio"
                                             "perl"
                                             "unzip"
                                             "ncurses"
@@ -45,13 +44,13 @@
                                             "sshuttle"
                                             "kubectl"
                                             "ripgrep"
-                                            "bat"
                                             "hunspell"
                                             "libvterm"
                                             "make"
                                             "font-iosevka-term"
                                             "fontconfig"
                                             "git"
+                                            "bat"
                                             "gcc-toolchain"
                                             "elixir"
                                             "erlang"
@@ -60,12 +59,11 @@
                                             "libnotify"
                                             "cmake"
                                             "emacs"
+                                            "emacs-guix"
                                             "i3lock"
                                             "google-chrome-stable"
                                             "xrandr"
                                             "zsh"
-                                            "qutebrowser"
-                                            "emacs-guix"
                                             "btop")))
 
   ;; Below is the list of Home services.  To search for available
@@ -73,8 +71,11 @@
   (services
    (list (service home-bash-service-type
                   (home-bash-configuration
-                   (aliases '(("grep" . "grep --color=auto") ("ll" . "ls -l")
-                              ("ls" . "ls -p --color=auto")))
+                   (aliases '(("grep" . "grep --color=auto") 
+                              ("ls" . "ls -p --color=auto")
+                              ("ll" . "ls -l")
+                              ("la" . "ls -la")
+                              ("aws-shell" . "aws-vault exec -d 8h -n")))
                    (bashrc (list (local-file
                                   "/home/mpm/src/guix-config/.bashrc" "bashrc")))
                    (bash-profile (list (local-file
