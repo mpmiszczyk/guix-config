@@ -1,0 +1,9 @@
+[user]
+	name = mpmiszczyk
+	email = mpmiszczyk@gmail.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/mpm/fresha/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/mpm/fresha/gh auth git-credential

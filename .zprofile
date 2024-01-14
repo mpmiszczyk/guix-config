@@ -1,8 +1,6 @@
-# Set up Guix Home profile
-if [ -f ~/.profile ]; then . ~/.profile; fi
-
-# Honor per-interactive-shell startup file
-if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+# Honor system-wide environment variables
+GUIX_PROFILE="/home/mpm/.guix-profile"
+source "$GUIX_PROFILE/etc/profile"
 
 # Merge search-paths from multiple profiles, the order matters.
 eval "$(guix package --search-paths \
@@ -12,3 +10,6 @@ eval "$(guix package --search-paths \
 
 # Prepend setuid programs.
 export PATH=/run/setuid-programs:$PATH
+
+# Created by `pipx` on 2024-01-12 09:22:18
+export PATH="$PATH:/home/mpm/.local/bin"

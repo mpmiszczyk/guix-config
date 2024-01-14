@@ -7,8 +7,12 @@
 (use-modules (gnu home)
              (gnu packages)
              (gnu services)
+             (gnu services shepherd)
              (guix gexp)
-             (gnu home services shells))
+             (gnu home services)
+             (gnu home services shells)
+             (gnu home services desktop)
+             (gnu home services shepherd))
 
 (home-environment
   ;; Below is the list of packages that will show up in your
@@ -69,15 +73,32 @@
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
   (services
-   (list (service home-bash-service-type
-                  (home-bash-configuration
-                   (aliases '(("grep" . "grep --color=auto") 
-                              ("ls" . "ls -p --color=auto")
-                              ("ll" . "ls -l")
-                              ("la" . "ls -la")
-                              ("aws-shell" . "aws-vault exec -d 8h -n")))
-                   (bashrc (list (local-file
-                                  "/home/mpm/src/guix-config/.bashrc" "bashrc")))
-                   (bash-profile (list (local-file
-                                        "/home/mpm/src/guix-config/.bash_profile"
-                                        "bash_profile"))))))))
+   (list (service home-zsh-service-type
+                  (home-zsh-configuration
+                   (zshrc (list (local-file "./.zshrc" "zshrc")))
+                   (zprofile (list (local-file "./.zprofile" "zprofile")))))
+         
+         ;; (simple-service 'config home-files-service-type
+         ;;          `(("gitconfig" ,(local-file "./files/.gitconfig"))
+         ;;            ("tool-versions" ,(local-file "./files/.tool-versions"))
+         ;;            ))
+         (simple-service 'configd home-xdg-configuration-files-service-type
+                  `(("btop" ,(local-file "./files/btop" #:recursive? #t))
+                    ("i3" ,(local-file "./files/i3" #:recursive? #t))))
+
+         (service home-redshift-service-type
+                  (home-redshift-configuration
+                   (location-provider 'manual)
+                   ; Warsaw
+                   (latitude 52.23)
+                   (longitude 21.01)))
+
+         (service home-shepherd-service-type
+                  (home-shepherd-configuration
+                   (services (list (shepherd-service
+                                    (provision '(emacs-server))
+                                    (documentation "Emacs server")
+                                    (start #~(make-forkexec-constructor '("emacs" "--fg-daemon")))
+                                    (stop #~(make-kill-destructor))
+                                    ;; (stop #~(make-system-destructor '("emacsclient" "--eveal" "(progn (setq kill-emacs-hook nil) (kill-emacs))")))
+                                    ))))))))
