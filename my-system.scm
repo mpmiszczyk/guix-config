@@ -11,8 +11,11 @@
 ;; used in this configuration.
 (use-modules (gnu)
              (gnu packages shells)
+             (gnu services networking)
+             (gnu services sound)
 	           (nongnu packages linux)
 	           (nongnu system linux-initrd))
+
 (use-service-modules desktop networking ssh xorg)
 
 (operating-system
@@ -20,13 +23,14 @@
   (kernel linux)
   (initrd microcode-initrd)
   (firmware (cons*
-	    iwlwifi-firmware
-	    linux-firmware
-            %base-firmware))
+	           iwlwifi-firmware
+	           linux-firmware
+             amdgpu-firmware
+             %base-firmware))
   
   (locale "en_US.utf8")
   (timezone "Europe/Warsaw")
-  (keyboard-layout (keyboard-layout "us" "colemak"
+  (keyboard-layout (keyboard-layout "pl" "colemak"
 				    #:options '("ctrl:nocaps")))
   (host-name "mpm-p16s1")
 
@@ -50,7 +54,8 @@
                           (specification->package "ratpoison")
                           (specification->package "xterm")
                           (specification->package "nss-certs")
-			  (specification->package "zsh"))
+			                    (specification->package "zsh")
+                          (specification->package "mesa"))
                     %base-packages))
 
   ;; Below is the list of system services.  To search for available
@@ -61,13 +66,11 @@
             ;; To configure OpenSSH, pass an 'openssh-configuration'
             ;; record as a second argument to 'service' below.
             (service openssh-service-type)
-            (set-xorg-configuration
-             (xorg-configuration (keyboard-layout keyboard-layout))))
+            (set-xorg-configuration (xorg-configuration
+                                     (keyboard-layout keyboard-layout)))
+            (service gnome-keyring-service-type)
+            )
 
-           (service dhcpd-service-type
-                    (dhcpd-configuration
-                     (config-file (local-file "my-dhcpd.conf"))
-                     (interfaces '("wlp3s0"))))
            ;; This is the default list of services we
            ;; are appending to.
            %desktop-services)
