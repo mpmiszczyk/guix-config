@@ -1,4 +1,7 @@
 # Honor system-wide environment variables
+
+echo ".zprofile Setting up the system, user profile, and related variables."
+
 export GUIX_PROFILE="/home/mpm/.guix-profile"
 source "$GUIX_PROFILE/etc/profile"
 

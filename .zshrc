@@ -70,7 +70,7 @@ ZSH_THEME="spaceship"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf fzf)
+plugins=(git asdf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,6 +100,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# # awscli in v2 provides a different executable
+# # but for now I decided to simply downgrade to the awscli@1
+alias aws='awsv2'
+
 # start a shell session authenticated to AWS
 alias aws-shell='aws-vault exec -d 8h -n'
 
@@ -111,6 +115,13 @@ alias aws-profiles="cat ~/.aws/config | grep '\\[profile' | sed -r 's/^\\[profil
 
 alias afd='aws-shell fresha-production-developer'
 alias aon='aws-shell fresha-production-on-call'
+alias alon='aws-login fresha-production-on-call'
+alias alfd='aws-login fresha-production-developer'
+
+
+# to solve some issues with compiling Erlang trough kerl
+export KERL_CONFIGURE_OPTIONS=--without-javac\ --with-ssl=$GUIX_PROFILE
+export CC=gcc
 
 # Created by `pipx` on 2024-01-12 09:22:18
 export PATH="$PATH:/home/mpm/.local/bin"

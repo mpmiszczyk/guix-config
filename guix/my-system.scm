@@ -36,7 +36,7 @@
  
  (locale "en_US.utf8")
  (timezone "Europe/Warsaw")
- (keyboard-layout (keyboard-layout "us" "colemak"
+ (keyboard-layout (keyboard-layout "pl" "colemak"
                                    #:options '("ctrl:nocaps")))
  (host-name "mpm-p16s1")
 
@@ -47,7 +47,8 @@
                 (group "users")
                 (home-directory "/home/mpm")
 		            (shell (file-append zsh "/bin/zsh"))
-                (supplementary-groups '("wheel" "netdev" "audio" "video" "docker")))
+                (supplementary-groups '("wheel" "netdev" "audio" "video" "docker" ;; "postgres"
+                                        )))
                %base-user-accounts))
 
  ;; Packages installed system-wide.  Users can also install packages
@@ -89,14 +90,14 @@
                                      (keyboard-layout keyboard-layout)))
             (service gnome-keyring-service-type)
             (service docker-service-type)
-            (service postgresql-service-type
-                     (postgresql-configuration
-                      (postgresql postgresql-14)))
-            (service postgresql-role-service-type
-                     (postgresql-role-configuration
-                      (roles
-                       (list (postgresql-role (name "mpm") (permissions '(login createdb replication superuser)))
-                             (postgresql-role (name "postgres") (permissions '(login createdb replication superuser))))))))
+            ;; (service postgresql-service-type
+            ;;          (postgresql-configuration
+            ;;           (postgresql postgresql-14)))
+            ;; (service postgresql-role-service-type
+            ;;          (postgresql-role-configuration
+            ;;           (roles
+            ;;            (list (postgresql-role (name "mpm") (permissions '(login createdb replication superuser)))))))
+            )
 
            ;; This is the default list of services we
            ;; are appending to.
