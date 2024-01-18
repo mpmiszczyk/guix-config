@@ -71,6 +71,7 @@
                     (specification->package "i3-wm")
                     (specification->package "i3status")
                     (specification->package "dmenu")
+                    (specification->package "setxkbmap")
                     (specification->package "xterm")
                     (specification->package "nss-certs")
 			              (specification->package "zsh")

@@ -80,7 +80,19 @@
                   (home-zsh-configuration
                    (zshrc (list (local-file "./.zshrc" "zshrc")))
                    (zprofile (list (local-file "./.zprofile" "zprofile")))))
-         
+
+         (service home-bash-service-type
+                  (home-bash-configuration
+                   (aliases '(("grep" . "grep --color=auto") 
+                              ("ls" . "ls -p --color=auto")
+                              ("ll" . "ls -l")
+                              ("la" . "ls -la")
+                              ("aws-shell" . "aws-vault exec -d 8h -n")))
+                   (bashrc (list (local-file
+                                  "/home/mpm/src/guix-config/.bashrc" "bashrc")))
+                   (bash-profile (list (local-file
+                                        "/home/mpm/src/guix-config/.bash_profile"
+                                        "bash_profile")))))         
          ;; (simple-service 'config home-files-service-type
          ;;          `((".gitconfig" ,(local-file "files/.gitconfig"))
          ;;            (".tool-versions" ,(local-file "files/.tool-versions"))))
