@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 
 # # awscli in v2 provides a different executable
 # # but for now I decided to simply downgrade to the awscli@1
-alias aws='awsv2'
+alias aws='awscliv2'
 
 # start a shell session authenticated to AWS
 alias aws-shell='aws-vault exec -d 8h -n'
@@ -118,6 +118,8 @@ alias aon='aws-shell fresha-production-on-call'
 alias alon='aws-login fresha-production-on-call'
 alias alfd='aws-login fresha-production-developer'
 
+alias k=kubectl
+
 
 # to solve some issues with compiling Erlang trough kerl
 export KERL_CONFIGURE_OPTIONS=--without-javac\ --with-ssl=$GUIX_PROFILE
@@ -125,3 +127,9 @@ export CC=gcc
 
 # Created by `pipx` on 2024-01-12 09:22:18
 export PATH="$PATH:/home/mpm/.local/bin"
+
+# for the KREW plugin manager
+# https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+
