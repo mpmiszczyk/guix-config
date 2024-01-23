@@ -12,6 +12,7 @@
 (use-modules (gnu)
              (gnu packages shells)
              (gnu packages lisp)
+	           (gnu packages linux)
              (gnu services networking)
              (gnu services sound)
              (gnu services docker)
@@ -22,11 +23,15 @@
 
 (use-package-modules fonts wm databases)
 
-(use-service-modules desktop networking ssh xorg)
+(use-service-modules linux desktop networking ssh xorg)
 
 (operating-system
  ;; nongnu firmware
  (kernel linux)
+ (kernel-loadable-modules (list v4l2loopback-linux-module
+                                ;; thinkpad-acpi
+                                ;; uvcvideo-module
+                                ))
  (initrd microcode-initrd)
  (firmware (cons*
 	          ;; iwlwifi-firmware
@@ -60,6 +65,7 @@
                     ;; font-iosevka-term
                     (specification->package "sbcl")
                     ;; (specification->package "sbcl-slynk")
+                    (specification->package "v4l2loopback-linux-module")
                     (specification->package "stumpwm")
                     (specification->package "sbcl-stumpwm-cpu")
                     (specification->package "sbcl-stumpwm-net")
@@ -86,6 +92,8 @@
    (append (list
             ;; To configure OpenSSH, pass an 'openssh-configuration'
             ;; record as a second argument to 'service' below.
+            (service kernel-module-loader-service-type
+                            '("uvcvideo" "v4l2loopback"))
             (service openssh-service-type)
             (set-xorg-configuration (xorg-configuration
                                      (keyboard-layout keyboard-layout)))

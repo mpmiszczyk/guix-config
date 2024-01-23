@@ -21,6 +21,7 @@
   ;; Home profile, under ~/.guix-home/profile.
   (packages (specifications->packages (list "pamixer"
                                             "pulseaudio"
+                                            "xf86-video-amdgpu"
                                             "mpv"
                                             "yt-dlp"
                                             "hunspell-dict-en-gb"
