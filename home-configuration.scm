@@ -100,6 +100,7 @@
          (simple-service 'configd home-xdg-configuration-files-service-type
                          `(("btop" ,(local-file "./files/btop" #:recursive? #t))
                            ("i3" ,(local-file "./files/i3" #:recursive? #t))
+                           ("fzf" ,(local-file "./files/fzf" #:recursive? #t))
                            ("stumpwm" ,(local-file "./files/stumpwm" #:recursive? #t))))
 
          (service home-redshift-service-type

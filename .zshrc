@@ -65,12 +65,14 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+export FZF_BASE=$XDG_CONFIG_HOME/fzf
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf aws)
+plugins=(git fzf asdf aws)
 
 source $ZSH/oh-my-zsh.sh
 
