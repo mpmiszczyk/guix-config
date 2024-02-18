@@ -72,7 +72,7 @@ export FZF_BASE=$XDG_CONFIG_HOME/fzf
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf asdf aws)
+plugins=(git fzf asdf aws kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,7 +104,7 @@ source $ZSH/oh-my-zsh.sh
 
 # # awscli in v2 provides a different executable
 # # but for now I decided to simply downgrade to the awscli@1
-alias aws='awscliv2'
+# # alias aws='awscliv2'
 
 # start a shell session authenticated to AWS
 alias aws-shell='aws-vault exec -d 8h -n'
@@ -122,6 +122,7 @@ alias alfd='aws-login fresha-production-developer'
 
 alias k=kubectl
 
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # to solve some issues with compiling Erlang trough kerl
 export KERL_CONFIGURE_OPTIONS=--without-javac\ --with-ssl=$GUIX_PROFILE
