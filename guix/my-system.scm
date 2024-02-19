@@ -99,13 +99,10 @@
                                      (keyboard-layout keyboard-layout)))
             (service gnome-keyring-service-type)
             (service docker-service-type)
-            ;; (service postgresql-service-type
-            ;;          (postgresql-configuration
-            ;;           (postgresql postgresql-14)))
-            ;; (service postgresql-role-service-type
-            ;;          (postgresql-role-configuration
-            ;;           (roles
-            ;;            (list (postgresql-role (name "mpm") (permissions '(login createdb replication superuser)))))))
+            (service screen-locker-services-type
+                     (screen-locker-configuration
+                      (name "slock")
+                      (program (file-append slock "/bin/slock"))))
             )
 
            ;; This is the default list of services we
